@@ -1,6 +1,6 @@
-package com.proyectosena.shokuapp.enumerado;
+package com.proyectosena.shokuapp.enumeration;
 
-public enum TipoRoll {
+public enum RollType {
 
     MAKI,
     FUROMAKI,

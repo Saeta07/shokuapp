@@ -1,6 +1,6 @@
-package com.proyectosena.shokuapp.enumerado;
+package com.proyectosena.shokuapp.enumeration;
 
-public enum TipoRamen {
+public enum RamenType {
     SHIO,
     SHOYU,
     TONKONTSU,
