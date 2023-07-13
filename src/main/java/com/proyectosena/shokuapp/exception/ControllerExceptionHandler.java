@@ -21,4 +21,11 @@ public class ControllerExceptionHandler {
         return new ResponseEntity(e.getMessage(),
                 HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(EmailAlreadyRegisterException.class)
+    public ResponseEntity handleException(EmailAlreadyRegisterException e) {
+
+        return new ResponseEntity(EmailAlreadyRegisterException.MESSAGE,
+                HttpStatus.CONFLICT);
+    }
 }

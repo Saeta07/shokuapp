@@ -1,12 +1,14 @@
-package com.proyectosena.shokuapp.servicio.impl;
+package com.proyectosena.shokuapp.service.impl;
 
+import com.proyectosena.shokuapp.dto.EditUserRoleDTO;
 import com.proyectosena.shokuapp.dto.NewUserDTO;
 import com.proyectosena.shokuapp.dto.UserDTO;
 import com.proyectosena.shokuapp.enumeration.UserRole;
+import com.proyectosena.shokuapp.exception.EmailAlreadyRegisterException;
 import com.proyectosena.shokuapp.exception.ResourceNotFoundException;
 import com.proyectosena.shokuapp.model.User;
 import com.proyectosena.shokuapp.repository.UserRepository;
-import com.proyectosena.shokuapp.servicio.UserService;
+import com.proyectosena.shokuapp.service.UserService;
 import com.proyectosena.shokuapp.util.IUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
@@ -72,17 +74,18 @@ public class UserServiceImpl implements UserService {
 
             userRepository.save(newAppUser);
             log.info("User created successfully");
-        } else {
+        }
+        else {
             log.warn("Employee already registered");
-            throw new IllegalStateException(EXISTING_USER_MESSAGE);
+            throw new EmailAlreadyRegisterException(EXISTING_USER_MESSAGE);
         }
     }
 
     @Override
     @Transactional
-    public void updateUser(Long id, User user) {
+    public void updateUser(Long id, final User user) {
 
-        logger.info("Update a customers ...");
+        logger.info("Update a customer ...");
 
         Optional<User> customerDb = userRepository.findById(id);
 
@@ -101,12 +104,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(final Long id) {
         try {
             userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException();
         }
+    }
+    @Override
+    @Transactional
+    public void changeUserRole(final Long id, final EditUserRoleDTO editUserDTO) {
+        logger.info("Change user role ...");
+
+        Optional<User> customerDb = userRepository.findById(id);
+
+        if (customerDb.isEmpty()) {
+            throw new ResourceNotFoundException();
+        }
+
+        editUserDTO.setUserRole(editUserDTO.getUserRole());
+        log.info("User updated successfully");
     }
 
     /*public UserService(){

@@ -3,7 +3,7 @@ package com.proyectosena.shokuapp.enumeration;
 public enum RamenType {
     SHIO,
     SHOYU,
-    TONKONTSU,
+    TONKOTSU,
     MISO,
     ABURA,
     TANTANMEN,

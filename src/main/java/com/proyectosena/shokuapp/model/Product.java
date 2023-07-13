@@ -1,32 +1,50 @@
 package com.proyectosena.shokuapp.model;
 
 import com.proyectosena.shokuapp.enumeration.DishCategory;
-import com.proyectosena.shokuapp.enumeration.DrinkType;
+import com.proyectosena.shokuapp.enumeration.RamenType;
 import com.proyectosena.shokuapp.enumeration.RollType;
-import lombok.NonNull;
+import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.List;
-
+import javax.persistence.*;
+@Entity
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
+@Table(name = "products")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "product_generator",
+            sequenceName = "product_sequence",
+            initialValue = 1,
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "product_generator"
+    )
+    @Column(name = "product_id")
     @NonNull
     private Long id;
-    private int price;
-    private DishCategory dishCategory;
-    private DrinkType drinkType;
-    private String flavor;
-    private String brand;
-    private RollType rollType;
-    private List<String> ingredients;
     @NonNull
+    private String name;
+    @NonNull
+    private Integer price;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dish_category")
+    private DishCategory dishCategory;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "roll_type")
+    private RollType rollType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ramen_type")
+    private RamenType ramenType;
+    private String ingredients;
     private String description;
-    private Boolean vegetarian;
-    private Boolean vegan;
+    @ManyToOne
+    private User appUser;
 
 
 }
