@@ -10,6 +10,7 @@ import lombok.Setter;
 @Builder
 public class NewBeverageDTO {
     private Long id;
+    private String name;
     private Integer price;
     private DrinkType drinkType;
     private String flavor;

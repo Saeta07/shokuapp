@@ -23,7 +23,6 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-
     private final IUtils utils;
     private static final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
     private static final String EXISTING_PRODUCT_MESSAGE = "Product already registered";
